@@ -1,6 +1,7 @@
 # Node modules
 api/node_modules/
 auth_service/node_modules/
+pruebas/node_modules/
 search_service/node_modules/
 
 # Logs
