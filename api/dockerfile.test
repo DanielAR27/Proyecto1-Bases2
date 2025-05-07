@@ -1,0 +1,19 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Instalar dependencias primero (para aprovechar la caché)
+COPY package*.json ./
+RUN npm install
+
+# Instalar Jest y herramientas de coverage
+RUN npm install -g jest jest-junit
+
+# Copiar el código fuente
+COPY . .
+
+# Configurar variables de entorno para tests
+ENV NODE_ENV=test
+
+# Comando para ejecutar tests y generar coverage
+CMD ["npm", "run", "test:coverage"]
