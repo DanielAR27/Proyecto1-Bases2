@@ -129,6 +129,32 @@ services:
     networks:
       - app_network
 
+  api_test:
+    build:
+      context: ./api
+      dockerfile: dockerfile.test
+    container_name: api_service_test_container
+    profiles:
+      - test
+    depends_on:
+      - postgres
+      - mongos1
+    environment:
+      AUTH_SERVICE_URL: ${AUTH_SERVICE_URL}
+      SEARCH_SERVICE_URL: ${SEARCH_SERVICE_URL}
+      REDIS_PORT: ${REDIS_PORT}
+      REDIS_HOST: ${REDIS_HOST}
+      DB_TYPE: ${DB_TYPE}
+      MONGO_URI: ${MONGO_URI}
+      DB_HOST: ${POSTGRES_HOST}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_NAME: ${POSTGRES_DB}
+      DB_PORT: ${POSTGRES_PORT}
+      API_PORT: ${API_PORT}
+    networks:
+      - app_network
+
   search_service:
     build: ./search_service
     container_name: search_service_container
@@ -155,6 +181,29 @@ services:
       - JWT_SECRET=${JWT_SECRET}
     networks:
       - app_network
+
+  search_test:
+  build:
+    context: ./search_service
+    dockerfile: dockerfile.test
+  container_name: search_service_test_container
+  profiles:
+    - test
+  depends_on:
+    - elasticsearch
+    - redis
+  environment:
+      - API_URL=${API_URL}
+      - AUTH_SERVICE_URL=${AUTH_SERVICE_URL}
+      - ELASTIC_NODE=${ELASTIC_NODE}
+      - ELASTIC_USER=${ELASTIC_USER}
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_HOST=${REDIS_HOST}
+      - SEARCH_PORT=${SEARCH_PORT}
+      - JWT_SECRET=${JWT_SECRET}
+  networks:
+    - app_network
 
   pgadmin:
     image: dpage/pgadmin4
