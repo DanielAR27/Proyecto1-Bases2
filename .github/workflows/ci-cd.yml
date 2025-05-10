@@ -20,7 +20,9 @@ jobs:
         run: docker compose up -d
       
       - name: Initialize MongoDB cluster
-        run: ./init_cluster.sh
+        run: |
+          chmod +x ./init_cluster.sh
+          ./init_cluster.sh
       
       - name: Start backend services
         run: docker compose --profile backend up --build -d
