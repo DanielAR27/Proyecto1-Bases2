@@ -18,6 +18,19 @@ save: jest.fn().mockResolvedValue(null)
 // Mock de user DAO
 jest.mock('../../src/dao/userDAO');
 
+// Mock de Axios
+jest.mock('axios', () => ({
+  delete: jest.fn().mockResolvedValue({ data: {} })
+}));
+
+// Mock de Redis
+jest.mock('../../src/config/redis', () => ({
+  get: jest.fn().mockResolvedValue(null),
+  set: jest.fn().mockResolvedValue(null),
+  del: jest.fn().mockResolvedValue(null)
+}));
+
+
 // Importar lo necesario
 const userController = require('../../src/controllers/userController');
 const UserDAO = require('../../src/dao/userDAO');

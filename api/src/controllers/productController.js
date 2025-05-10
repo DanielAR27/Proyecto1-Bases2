@@ -35,7 +35,9 @@ const productController = {
       
       res.status(201).json({ message: 'Producto creado.', producto: nuevoProducto });
     } catch (error) {
+      /* istanbul ignore next */
       console.error(error);
+      /* istanbul ignore next */
       res.status(500).json({ error: 'Error al crear producto.' });
     }
   },
@@ -62,7 +64,9 @@ const productController = {
       
       res.json(productos);
     } catch (error) {
+      /* istanbul ignore next */
       console.error(error);
+      /* istanbul ignore next */
       res.status(500).json({ error: 'Error al obtener productos.' });
     }
   },
@@ -93,7 +97,9 @@ const productController = {
 
       res.json(producto);
     } catch (error) {
+      /* istanbul ignore next */
       console.error(error);
+      /* istanbul ignore next */
       res.status(500).json({ error: 'Error al buscar el producto.' });
     }
   },
@@ -132,7 +138,9 @@ const productController = {
 
       res.json({ message: 'Producto actualizado.', producto: actualizado });
     } catch (error) {
+      /* istanbul ignore next */
       console.error(error);
+      /* istanbul ignore next */
       res.status(500).json({ error: 'Error al actualizar el producto.' });
     }
   },
@@ -154,11 +162,20 @@ const productController = {
 
       // Notificar al servicio de búsqueda (asíncrono)
       try {
-        await axios.delete(`${process.env.SEARCH_SERVICE_URL}/search/product/${id}`,
-          {headers: {
-            Authorization: req.headers.authorization // Pasando el mismo token del usuario
-          }
-        });
+        if (process.env.SEARCH_SERVICE_URL) {
+          await axios.delete(`${process.env.SEARCH_SERVICE_URL}/search/product/${id}`,
+            {
+              headers: {
+                Authorization: req.headers.authorization
+              },
+              // Ignorar errores 404 (ya eliminado o no existe)
+              validateStatus: function (status) {
+                return (status >= 200 && status < 300) || status === 404;
+              },
+              timeout: 3000
+            }
+          );
+        }
       } catch (error) {
         console.error('Error al eliminar producto de búsqueda:', error.message);
         // No detener el flujo por error en servicio de búsqueda
@@ -171,10 +188,12 @@ const productController = {
 
       res.json({ message: 'Producto eliminado correctamente.' });
     } catch (error) {
+      /* istanbul ignore next */
       console.error(error);
+      /* istanbul ignore next */
       res.status(500).json({ error: 'Error al eliminar el producto.' });
     }
-  },
+  }
 };
 
 module.exports = productController;

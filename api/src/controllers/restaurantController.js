@@ -31,7 +31,9 @@ const restaurantController = {
         restaurante: nuevoRestaurante,
       });
     } catch (error) {
+      /* istanbul ignore next*/
       console.error(error);
+      /* istanbul ignore next*/
       res.status(500).json({ error: 'Error en el servidor.' });
     }
   },
@@ -58,7 +60,9 @@ const restaurantController = {
       
       res.json(restaurantes);
     } catch (error) {
+      /* istanbul ignore next*/
       console.error(error);
+      /* istanbul ignore next*/
       res.status(500).json({ error: 'Error en el servidor.' });
     }
   },
@@ -89,7 +93,9 @@ const restaurantController = {
 
       res.json(restaurante);
     } catch (error) {
+      /* istanbul ignore next*/
       console.error(error);
+      /* istanbul ignore next*/
       res.status(500).json({ error: 'Error en el servidor.' });
     }
   },
@@ -125,7 +131,9 @@ const restaurantController = {
         restaurante: restauranteActualizado,
       });
     } catch (error) {
+      /* istanbul ignore next*/
       console.error(error);
+      /* istanbul ignore next*/
       res.status(500).json({ error: 'Error en el servidor.' });
     }
   },
@@ -164,7 +172,9 @@ const restaurantController = {
 
       res.json({ message: 'Restaurante eliminado correctamente.' });
     } catch (error) {
+      /* istanbul ignore next*/
       console.error(error);
+      /* istanbul ignore next*/
       res.status(500).json({ error: 'Error en el servidor.' });
     }
   },

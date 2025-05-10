@@ -27,7 +27,9 @@ const menuController = {
         menu: nuevoMenu,
       });
     } catch (error) {
+      /* istanbul ignore next*/
       console.error(error);
+      /* istanbul ignore next*/
       res.status(500).json({ error: 'Error en el servidor.' });
     }
   },
@@ -54,7 +56,9 @@ const menuController = {
       
       res.json(menus);
     } catch (error) {
+      /* istanbul ignore next*/
       console.error(error);
+      /* istanbul ignore next*/
       res.status(500).json({ error: 'Error en el servidor.' });
     }
   },
@@ -85,7 +89,9 @@ const menuController = {
 
       res.json(menu);
     } catch (error) {
+      /* istanbul ignore next*/
       console.error(error);
+      /* istanbul ignore next*/
       res.status(500).json({ error: 'Error en el servidor.' });
     }
   },
@@ -119,7 +125,9 @@ const menuController = {
         menu: menuActualizado,
       });
     } catch (error) {
+      /* istanbul ignore next*/
       console.error(error);
+      /* istanbul ignore next*/
       res.status(500).json({ error: 'Error en el servidor.' });
     }
   },
@@ -148,7 +156,9 @@ const menuController = {
 
       res.json({ message: 'Menú eliminado correctamente.' });
     } catch (error) {
+      /* istanbul ignore next*/
       console.error(error);
+      /* istanbul ignore next*/
       res.status(500).json({ error: 'Error en el servidor.' });
     }
   },

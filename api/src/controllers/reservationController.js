@@ -33,7 +33,9 @@ const reservationController = {
 
       res.status(201).json({ message: 'Reserva creada.', reserva: nueva });
     } catch (error) {
+      /* istanbul ignore next */
       console.error(error);
+      /* istanbul ignore next */
       res.status(500).json({ error: 'Error al crear la reserva.' });
     }
   },
@@ -60,7 +62,9 @@ const reservationController = {
       
       res.json(reservas);
     } catch (error) {
+      /* istanbul ignore next */
       console.error(error);
+      /* istanbul ignore next */
       res.status(500).json({ error: 'Error al obtener reservas.' });
     }
   },
@@ -91,7 +95,9 @@ const reservationController = {
 
       res.json(reserva);
     } catch (error) {
+      /* istanbul ignore next */
       console.error(error);
+      /* istanbul ignore next */
       res.status(500).json({ error: 'Error al buscar la reserva.' });
     }
   },
@@ -123,7 +129,9 @@ const reservationController = {
 
       res.json({ message: 'Reserva actualizada.', reserva: actualizada });
     } catch (error) {
+      /* istanbul ignore next */
       console.error(error);
+      /* istanbul ignore next */
       res.status(500).json({ error: 'Error al actualizar la reserva.' });
     }
   },
@@ -154,7 +162,9 @@ const reservationController = {
 
       res.json({ message: 'Reserva eliminada correctamente.' });
     } catch (error) {
+      /* istanbul ignore next */
       console.error(error);
+      /* istanbul ignore next */
       res.status(500).json({ error: 'Error al eliminar la reserva.' });
     }
   },

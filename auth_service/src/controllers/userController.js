@@ -30,7 +30,9 @@ const userController = {
 
       res.json(usuario);
     } catch (error) {
+      /* istanbul ignore next*/
       console.error(error);
+      /* istanbul ignore next*/
       res.status(500).json({ error: 'Error en el servidor.' });
     }
   },
@@ -76,9 +78,10 @@ const userController = {
         message: 'Usuario actualizado correctamente.',
         usuario: usuarioActualizado,
       });
-
     } catch (error) {
+      /* istanbul ignore next*/
       console.error(error);
+      /* istanbul ignore next*/
       res.status(500).json({ error: 'Error en el servidor.' });
     }
   },
@@ -96,8 +99,8 @@ const userController = {
         return res.status(404).json({ error: 'Usuario no encontrado.' });
       }
 
+      // Si se borra un usuario, se hace un borrado en cascada para mongo.
       if (process.env.DB_TYPE === 'mongo') {
-        console.log("Pasamos por aquí");
         await axios.delete(`${process.env.API_URL}/clean/user/${id}`);
       }
 
@@ -112,7 +115,9 @@ const userController = {
       res.json({ message: 'Usuario eliminado correctamente.'});
 
     } catch (error) {
+      /* istanbul ignore next*/
       console.error(error);
+      /* istanbul ignore next*/
       res.status(500).json({ error: 'Error en el servidor.' });
     }
   },

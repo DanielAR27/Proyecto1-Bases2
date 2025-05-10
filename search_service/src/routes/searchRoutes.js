@@ -15,36 +15,6 @@ const authMiddleware = require('../middlewares/authMiddleware');
 
 /**
  * @swagger
- * components:
- *   schemas:
- *     Producto:
- *       type: object
- *       required:
- *         - id_producto
- *         - nombre
- *         - categoria
- *       properties:
- *         id_producto:
- *           type: integer
- *           description: Identificador único del producto
- *         nombre:
- *           type: string
- *           description: Nombre del producto
- *         descripcion:
- *           type: string
- *           description: Descripción detallada del producto
- *         categoria:
- *           type: string
- *           description: Categoría a la que pertenece el producto
- *   securitySchemes:
- *     bearerAuth:
- *       type: http
- *       scheme: bearer
- *       bearerFormat: JWT
- */
-
-/**
- * @swagger
  * /search/products:
  *   get:
  *     summary: Buscar productos por texto

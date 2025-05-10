@@ -25,7 +25,7 @@ const UserDAO = {
       return result.rows[0];
     } else if (dbType === 'mongo') {
       const user = new UserModelMongo({ nombre, email, contrasena_hash, rol });
-      return await user.save();
+      return (await user.save()).toObject();
     }
   },
 

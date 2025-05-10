@@ -88,6 +88,9 @@ services:
       - postgres
       - mongos1
     environment:
+      API_URL: ${API_URL}
+      REDIS_PORT: ${REDIS_PORT}
+      REDIS_HOST: ${REDIS_HOST}
       DB_TYPE: ${DB_TYPE}
       MONGO_URI: ${MONGO_URI}
       DB_HOST: ${POSTGRES_HOST}
@@ -183,16 +186,16 @@ services:
       - app_network
 
   search_test:
-  build:
-    context: ./search_service
-    dockerfile: dockerfile.test
-  container_name: search_service_test_container
-  profiles:
-    - test
-  depends_on:
-    - elasticsearch
-    - redis
-  environment:
+    build:
+      context: ./search_service
+      dockerfile: dockerfile.test
+    container_name: search_service_test_container
+    profiles:
+      - test
+    depends_on:
+      - elasticsearch
+      - redis
+    environment:
       - API_URL=${API_URL}
       - AUTH_SERVICE_URL=${AUTH_SERVICE_URL}
       - ELASTIC_NODE=${ELASTIC_NODE}
@@ -202,8 +205,8 @@ services:
       - REDIS_HOST=${REDIS_HOST}
       - SEARCH_PORT=${SEARCH_PORT}
       - JWT_SECRET=${JWT_SECRET}
-  networks:
-    - app_network
+    networks:
+      - app_network
 
   pgadmin:
     image: dpage/pgadmin4

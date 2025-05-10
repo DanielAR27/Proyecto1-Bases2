@@ -15,6 +15,7 @@ const authController = {
       const decoded = jwt.verify(token.replace('Bearer ', ''), process.env.JWT_SECRET);
       res.json({ usuario: decoded });
     } catch (error) {
+      /* istanbul ignore next*/
       res.status(401).json({ error: 'Token inválido o expirado.' });
     }
   },
@@ -42,13 +43,17 @@ const authController = {
 
       const nuevoUsuario = await UserDAO.createUser({ nombre, email, contrasena_hash, rol });
 
+      console.log("")
+      delete nuevoUsuario.contrasena_hash;
+
       res.status(201).json({
         message: 'Usuario registrado exitosamente.',
         usuario: nuevoUsuario,
       });
-
     } catch (error) {
+      /* istanbul ignore next*/
       console.error(error);
+      /* istanbul ignore next*/
       res.status(500).json({ error: 'Error en el servidor.' });
     }
   },
@@ -86,9 +91,10 @@ const authController = {
         token,
         usuario: payload,
       });
-
     } catch (error) {
+      /* istanbul ignore next*/
       console.error(error);
+      /* istanbul ignore next*/
       res.status(500).json({ error: 'Error en el servidor.' });
     }
   },

@@ -12,7 +12,11 @@ const ProductDAO = {
          RETURNING id_producto, nombre, categoria, descripcion, precio, id_menu`,
         [nombre, categoria, descripcion || 'Producto sin descripción', precio, id_menu]
       );
-      return result.rows[0];
+      const producto = result.rows[0];
+      if (producto) {
+        producto.precio = parseFloat(producto.precio);
+      }
+      return producto;
     } else if (dbType === 'mongo') {
       const producto = new ProductModelMongo({
         nombre,
@@ -31,7 +35,10 @@ const ProductDAO = {
       const result = await pool.query(
         `SELECT id_producto, nombre, categoria, descripcion, precio, id_menu FROM Producto`
       );
-      return result.rows;
+      return result.rows.map(producto => ({
+        ...producto,
+        precio: parseFloat(producto.precio)
+      }));
     } else if (dbType === 'mongo') {
       return await ProductModelMongo.find({}, 'id_producto nombre categoria descripcion precio id_menu').lean();
     }
@@ -46,7 +53,11 @@ const ProductDAO = {
          WHERE id_producto = $1`,
         [id_producto]
       );
-      return result.rows[0];
+      const producto = result.rows[0];
+      if (producto) {
+        producto.precio = parseFloat(producto.precio);
+      }
+      return producto;
     } else if (dbType === 'mongo') {
       return await ProductModelMongo.findOne({ id_producto }).lean();
     }
@@ -62,7 +73,11 @@ const ProductDAO = {
          RETURNING id_producto, nombre, categoria, descripcion, precio, id_menu`,
         [nombre, categoria, descripcion, precio, id_producto]
       );
-      return result.rows[0];
+      const producto = result.rows[0];
+      if (producto) {
+        producto.precio = parseFloat(producto.precio);
+      }
+      return producto;
     } else if (dbType === 'mongo') {
       return await ProductModelMongo.findOneAndUpdate(
         { id_producto },

@@ -28,7 +28,12 @@ const PedidoDAO = {
              RETURNING id_detalle, id_producto, cantidad, subtotal`,
             [pedido.id_pedido, id_producto, cantidad, subtotal]
           );
-          pedido.detalles.push(detalleResult.rows[0]);
+          
+          // Convertir subtotal a número
+          const detalleItem = detalleResult.rows[0];
+          detalleItem.subtotal = parseFloat(detalleItem.subtotal);
+          
+          pedido.detalles.push(detalleItem);
         }
 
         await client.query('COMMIT');
@@ -52,13 +57,32 @@ const PedidoDAO = {
     }
   },
 
-  // Obtener todos los pedidos
+  // Obtener todos los pedidos con sus detalles
   async getAllPedidos() {
     if (dbType === 'postgres') {
-      const result = await pool.query(
-        `SELECT * FROM Pedido`
+      // Primero obtenemos todos los pedidos
+      const pedidosResult = await pool.query(
+        `SELECT * FROM Pedido ORDER BY fecha_hora DESC`
       );
-      return result.rows;
+      
+      const pedidos = pedidosResult.rows;
+      
+      // Para cada pedido, obtenemos sus detalles
+      for (const pedido of pedidos) {
+        const detallesResult = await pool.query(
+          `SELECT id_producto, cantidad, subtotal
+           FROM Detalle_Pedido WHERE id_pedido = $1`,
+          [pedido.id_pedido]
+        );
+        
+        // Convertir subtotal a número en cada detalle
+        pedido.detalles = detallesResult.rows.map(detalle => ({
+          ...detalle,
+          subtotal: parseFloat(detalle.subtotal)
+        }));
+      }
+      
+      return pedidos;
     } else if (dbType === 'mongo') {
       return await PedidoModelMongo.find().lean();
     }
@@ -78,8 +102,14 @@ const PedidoDAO = {
          FROM Detalle_Pedido WHERE id_pedido = $1`,
         [id_pedido]
       );
+      
+      // Convertir subtotal a número en cada detalle
+      const detallesConvertidos = detalles.rows.map(detalle => ({
+        ...detalle,
+        subtotal: parseFloat(detalle.subtotal)
+      }));
 
-      return { ...pedido.rows[0], detalles: detalles.rows };
+      return { ...pedido.rows[0], detalles: detallesConvertidos };
     } else if (dbType === 'mongo') {
       return await PedidoModelMongo.findOne({ id_pedido }).lean();
     }

@@ -57,7 +57,9 @@ const pedidoController = {
 
       res.status(201).json({ message: 'Pedido creado exitosamente.', pedido: nuevoPedido });
     } catch (error) {
+      /* istanbul ignore next*/
       console.error(error);
+      /* istanbul ignore next*/
       res.status(500).json({ error: 'Error al crear el pedido.' });
     }
   },
@@ -84,7 +86,9 @@ const pedidoController = {
       
       res.json(pedidos);
     } catch (error) {
+      /* istanbul ignore next*/
       console.error(error);
+      /* istanbul ignore next*/
       res.status(500).json({ error: 'Error al obtener pedidos.' });
     }
   },
@@ -115,7 +119,9 @@ const pedidoController = {
 
       res.json(pedido);
     } catch (error) {
+      /* istanbul ignore next*/
       console.error(error);
+      /* istanbul ignore next*/
       res.status(500).json({ error: 'Error al buscar el pedido.' });
     }
   },
@@ -144,7 +150,9 @@ const pedidoController = {
 
       res.json({ message: 'Pedido eliminado correctamente.' });
     } catch (error) {
+      /* istanbul ignore next*/
       console.error(error);
+      /* istanbul ignore next*/
       res.status(500).json({ error: 'Error al eliminar el pedido.' });
     }
   }

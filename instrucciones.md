@@ -4,7 +4,13 @@ docker-compose up -d
 
 docker-compose --profile backend up --build -d
 
-docker-compose --profile test up -d auth_service auth_test
+docker-compose --profile test up --build -d auth_service auth_test
+
+docker-compose --profile test build auth_test
+docker-compose --profile test run --rm auth_test
+
+docker-compose --profile test build api_test
+docker-compose --profile test run --rm api_test
 
 docker exec auth_test_container npm run test:integration:coverage
 

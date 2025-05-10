@@ -1,0 +1,79 @@
+
+C:\Users\colos\OneDrive\Documents\TEC\Bases 2\Proyecto #1\Proyecto #1 - BD2
+├── api
+|   ├── src
+|   |   ├── config
+|   |   ├── controllers
+|   |   ├── dao
+|   |   ├── db
+|   |   ├── middlewares
+|   |   ├── models
+|   |   ├── routes
+|   |   ├── app.js
+|   ├── swagger
+|   ├── tests
+|   |   ├── integration
+|   |   ├── unit
+|   |   ├── utils
+|   ├── dockerfile
+|   ├── dockerfile.test
+|   ├── package-lock.json
+|   ├── package.json
+|   ├── server.js
+├── auth_service
+|   ├── src
+|   |   ├── config
+|   |   ├── controllers
+|   |   ├── dao
+|   |   ├── db
+|   |   ├── middlewares
+|   |   ├── models
+|   |   ├── routes
+|   |   ├── app.js
+|   ├── swagger
+|   ├── tests
+|   |   ├── integration
+|   |   ├── unit
+|   |   ├── utils
+|   ├── dockerfile
+|   ├── dockerfile.test
+|   ├── package-lock.json
+|   ├── package.json
+|   ├── server.js
+├── pruebas
+|   ├── demoScript.js
+|   ├── package-lock.json
+|   ├── package.json
+├── search_service
+|   ├── src
+|   |   ├── config
+|   |   ├── controllers
+|   |   ├── middlewares
+|   |   ├── models
+|   |   ├── routes
+|   |   ├── services
+|   |   ├── app.js
+|   |   ├── init.js
+|   ├── swagger
+|   ├── tests
+|   |   ├── integration
+|   |   ├── unit
+|   |   ├── utils
+|   ├── dockerfile
+|   ├── dockerfile.test
+|   ├── package-lock.json
+|   ├── package.json
+|   ├── server.js
+├── docker-compose.yml
+├── estructura.txt
+├── init.sql
+├── init_cluster.sh
+├── instrucciones.md
+├── life_easy.sh
+├── nginx.conf
+├── pruebas
+├── pruebas.sh
+├── README.md
+├── search_service
+└── template.env
+

@@ -92,7 +92,7 @@ router.post('/', authMiddleware, pedidoController.createPedido);
 
 /**
  * @swagger
- * /pedidos/{id}:
+ * /orders/{id}:
  *   delete:
  *     summary: Eliminar un pedido
  *     tags: [Pedidos]
