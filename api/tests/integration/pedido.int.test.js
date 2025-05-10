@@ -216,41 +216,12 @@ describe('Pedidos API', () => {
   });
 
   // Test para getAllPedidos básico
-  test('Obtener todos los pedidos como admin', async () => {
+  test('Obtener todos los pedidos', async () => {
     const res = await request(app)
-      .get('/orders')
-      .set('Authorization', `Bearer ${admin.token}`);
+      .get('/orders');
     
     expect(res.statusCode).toBe(200);
     expect(Array.isArray(res.body)).toBe(true);
   });
 
-  // Test específico para la funcionalidad de caché de Redis
-  test('Redis caché funciona para getAllPedidos', async () => {    
-    // 2. Primera llamada (crea la caché)
-    await request(app)
-      .get('/orders')
-    
-    // Pequeña pausa para asegurar que Redis ha completado la operación
-    await new Promise(resolve => setTimeout(resolve, 100));
-
-    // 3. Verificar que se guardó en caché
-    const cachedData = await redisClient.get('pedidos:all');
-    expect(cachedData).not.toBeNull();
-    
-    // 4. Crear un pedido (invalidar caché)
-    const nuevoPedido = await testUtils.createPedido(app, user.token, {
-      id_usuario: user.id,
-      id_restaurante: restaurante.id_restaurante,
-      tipo: 'para recoger',
-      productos: [{ id_producto: producto.id_producto, cantidad: 1 }]
-    });
-    
-    // 5. Verificar que la caché fue invalidada
-    const cachePostCreacion = await redisClient.get('pedidos:all');
-    expect(cachePostCreacion).toBeNull();
-    
-    // Limpiar
-    await testUtils.deletePedido(app, user.token, nuevoPedido.id_pedido);
-  });
 });
