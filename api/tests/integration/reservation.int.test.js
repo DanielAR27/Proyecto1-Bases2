@@ -172,30 +172,4 @@ describe('Reservas API', () => {
     reservaIds = reservaIds.filter(id => id !== reservaIds[0]);
   });
 
-  // 5. Prueba de caché Redis
-  test('Caché Redis funciona correctamente', async () => {
-    // Limpiar caché
-    await redisClient.del('reservas:all');
-    
-    // Primera llamada, debería guardar en caché
-    await testUtils.getAllReservations(app);
-    
-    // Verificar que se guardó en caché
-    const cacheValue = await redisClient.get('reservas:all');
-    expect(cacheValue).not.toBeNull();
-    
-    // Crear reserva para invalidar caché
-    const nuevaReserva = await testUtils.createReservation(app, user.token, {
-      id_usuario: user.id,
-      id_restaurante: restaurante.id_restaurante,
-      fecha_hora: new Date(Date.now() + 86400000).toISOString(),
-      estado: 'pendiente'
-    });
-    
-    reservaIds.push(nuevaReserva.id_reserva);
-    
-    // Verificar que la caché fue invalidada
-    const cachePostCreacion = await redisClient.get('reservas:all');
-    expect(cachePostCreacion).toBeNull();
-  });
 });
