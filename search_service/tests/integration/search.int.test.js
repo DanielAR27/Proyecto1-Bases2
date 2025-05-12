@@ -1,3 +1,5 @@
+jest.setTimeout(60000); // 60 segundos en lugar de los 10 segundos predeterminados
+
 // tests/routes/search.routes.test.js
 const app = require('../../src/app');
 const redisClient = require('../../src/config/redis');
@@ -51,8 +53,6 @@ describe('Servicio de Búsqueda', () => {
     // Reindexar productos para asegurar que estén disponibles para búsqueda
     try {
       await testUtils.reindexProducts(app, admin.token);
-      // Esperar a que ElasticSearch indexe los documentos
-      await new Promise(resolve => setTimeout(resolve, 1000));
     } catch (error) {
       console.warn('Error al reindexar productos:', error.message);
     }

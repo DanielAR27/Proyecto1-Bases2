@@ -27,14 +27,28 @@ const authMiddleware = require('../middlewares/authMiddleware');
  *         required: true
  *         description: Término de búsqueda
  *     responses:
- *       200:
+*       200:
  *         description: Lista de productos encontrados
  *         content:
  *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Producto'
+ *             example:
+ *               total: 45
+ *               products:
+ *                 - nombre: Pasta
+ *                   categoria: Ración pequeña
+ *                   descripcion: pasta sabrosa empanizada
+ *                   precio: 140.35
+ *                   id_menu: 123
+ *                   id_producto: 601
+ *                   score: 9.084343
+ *                 - nombre: Sushi
+ *                   categoria: Entrada
+ *                   descripcion: sushi crujiente glaseada
+ *                   precio: 235.90
+ *                   id_menu: 122
+ *                   id_producto: 602
+ *                   score: 8.782100
+ *                 - ...
  *       400:
  *         description: Término de búsqueda no proporcionado
  *       500:
@@ -69,25 +83,27 @@ router.get('/products', searchController.searchProducts);
  *         description: Cantidad de resultados por página
  *     responses:
  *       200:
- *         description: Productos filtrados por categoría
+ *         description: Lista de productos filtrados por categoría
  *         content:
  *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 productos:
- *                   type: array
- *                   items:
- *                     $ref: '#/components/schemas/Producto'
- *                 total:
- *                   type: integer
- *                   description: Total de productos encontrados
- *                 pagina:
- *                   type: integer
- *                   description: Página actual
- *                 total_paginas:
- *                   type: integer
- *                   description: Total de páginas disponibles
+ *             example:
+ *               total: 546
+ *               products:
+ *                 - nombre: Pasta
+ *                   categoria: Combo
+ *                   descripcion: pasta sabrosa de la casa
+ *                   precio: 957.59
+ *                   id_menu: 570
+ *                   id_producto: 5077
+ *                   score: 2.2218251
+ *                 - nombre: Sandwich
+ *                   categoria: Combo
+ *                   descripcion: sandwich crujiente con especias
+ *                   precio: 455.29
+ *                   id_menu: 573
+ *                   id_producto: 5107
+ *                   score: 2.2218251
+ *                 - ...
  *       500:
  *         description: Error al realizar la búsqueda por categoría
  */
@@ -116,8 +132,8 @@ router.get('/products/category/:categoria', searchController.searchProductsByCat
  *                   type: integer
  *                   description: Número de productos reindexados
  *                   example: 150
- *       401:
- *         description: No autorizado para realizar esta operación
+ *       403:
+ *         description: No autorizado para realizar reindexación
  *       500:
  *         description: Error al reindexar productos
  */
@@ -136,24 +152,30 @@ router.post('/reindex', authMiddleware, searchController.reindexProducts);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Producto'
+ *             type: object
+ *             properties:
+ *               id_producto:
+ *                 type: integer
+ *                 description: Identificador del producto
+ *               nombre:
+ *                 type: string
+ *                 description: Nombre actualizado del producto
+ *               descripcion:
+ *                 type: string
+ *                 description: Descripción actualizada del producto
+ *               categoria:
+ *                 type: string
+ *                 description: Categoría actualizada del producto
+ *             required:
+ *               - nombre
+ *               - categoria
  *     responses:
  *       201:
  *         description: Producto indexado correctamente
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "Producto indexado correctamente"
- *                 producto:
- *                   $ref: '#/components/schemas/Producto'
  *       400:
  *         description: Datos de producto incompletos
- *       401:
- *         description: No autorizado para indexar productos
+ *       403:
+ *         description: No autorizado para crear índice del producto
  *       500:
  *         description: Error al indexar producto
  */
@@ -196,21 +218,10 @@ router.post('/product', authMiddleware, searchController.indexProduct);
  *     responses:
  *       200:
  *         description: Producto actualizado en índice correctamente
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "Producto actualizado correctamente"
- *                 id:
- *                   type: string
- *                   example: "123"
  *       400:
  *         description: Datos de producto incompletos
- *       401:
- *         description: No autorizado para actualizar productos
+ *       403:
+ *         description: No autorizado para actualizar índice del producto
  *       404:
  *         description: Producto no encontrado
  *       500:
@@ -236,19 +247,8 @@ router.put('/product/:id', authMiddleware, searchController.updateProduct);
  *     responses:
  *       200:
  *         description: Producto eliminado del índice correctamente
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "Producto eliminado correctamente"
- *                 id:
- *                   type: string
- *                   example: "123"
- *       401:
- *         description: No autorizado para eliminar productos
+ *       403:
+ *         description: No autorizado para eliminar índice del producto
  *       404:
  *         description: Producto no encontrado
  *       500:

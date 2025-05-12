@@ -78,8 +78,8 @@ const searchController = {
   async reindexProducts(req, res) {
     try {
       // Verificar que el usuario sea administrador
-      if (req.usuario.rol !== 'administrador') {
-        return res.status(403).json({ error: 'Solo administradores pueden reindexar productos' });
+      if (!req.usuario || req.usuario.rol !== 'administrador') {
+        return res.status(403).json({ error: 'Solo los administradores pueden reindexar productos.' });
       }
       
       // Obtener todos los productos de la API
@@ -111,8 +111,9 @@ const searchController = {
   async indexProduct(req, res) {
     try {
       // Verificar que sea administrador o sistema
-      if (req.usuario && req.usuario.rol !== 'administrador') {
-        return res.status(403).json({ error: 'No autorizado para indexar productos' });
+      // Verificar que el usuario sea administrador
+      if (!req.usuario || req.usuario.rol !== 'administrador') {
+        return res.status(403).json({ error: 'Solo los administradores pueden reindexar productos.' });
       }
 
       const producto = req.body;
@@ -135,9 +136,9 @@ const searchController = {
    /* istanbul ignore next */
   async updateProduct(req, res) {
     try {
-      // Verificar que sea administrador o sistema
-      if (req.usuario && req.usuario.rol !== 'administrador') {
-        return res.status(403).json({ error: 'No autorizado para actualizar productos' });
+      // Verificar que el usuario sea administrador
+      if (!req.usuario || req.usuario.rol !== 'administrador') {
+        return res.status(403).json({ error: 'Solo los administradores pueden reindexar productos.' });
       }
 
       const { id } = req.params;

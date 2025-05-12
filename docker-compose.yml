@@ -49,15 +49,45 @@ services:
     networks:
       - app_network
 
-  auth_service:
+  # AUTH SERVICE - INSTANCIA 1
+  auth_service1:
     build: ./auth_service
-    container_name: auth_service_container
+    container_name: auth_service1
     profiles:
       - backend
       - test
     restart: always
     ports:
       - "${AUTH_PORT}:${AUTH_PORT}"
+    depends_on:
+      - postgres
+      - mongos1
+    environment:
+      API_URL: ${API_URL}
+      REDIS_PORT: ${REDIS_PORT}
+      REDIS_HOST: ${REDIS_HOST}
+      DB_TYPE: ${DB_TYPE}
+      MONGO_URI: ${MONGO_URI}
+      DB_HOST: ${POSTGRES_HOST}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_NAME: ${POSTGRES_DB}
+      DB_PORT: ${POSTGRES_PORT}
+      AUTH_PORT: ${AUTH_PORT}
+      JWT_SECRET: ${JWT_SECRET}
+    networks:
+      - app_network
+
+  # AUTH SERVICE - INSTANCIA 2
+  auth_service2:
+    build: ./auth_service
+    container_name: auth_service2
+    profiles:
+      - backend
+      - test
+    restart: always
+    expose:
+      - "${AUTH_PORT}"
     depends_on:
       - postgres
       - mongos1
@@ -103,9 +133,10 @@ services:
     networks:
       - app_network
 
-  api:
+  # API SERVICE - INSTANCIA 1
+  api1:
     build: ./api
-    container_name: api_container
+    container_name: api1
     profiles:
       - backend
       - test
@@ -113,7 +144,37 @@ services:
     ports:
       - "${API_PORT}:${API_PORT}"
     depends_on:
-      - auth_service
+      - auth_service1
+      - postgres
+      - mongos1
+    environment:
+      AUTH_SERVICE_URL: ${AUTH_SERVICE_URL}
+      SEARCH_SERVICE_URL: ${SEARCH_SERVICE_URL}
+      REDIS_PORT: ${REDIS_PORT}
+      REDIS_HOST: ${REDIS_HOST}
+      DB_TYPE: ${DB_TYPE}
+      MONGO_URI: ${MONGO_URI}
+      DB_HOST: ${POSTGRES_HOST}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_NAME: ${POSTGRES_DB}
+      DB_PORT: ${POSTGRES_PORT}
+      API_PORT: ${API_PORT}
+    networks:
+      - app_network
+
+  # API SERVICE - INSTANCIA 2
+  api2:
+    build: ./api
+    container_name: api2
+    profiles:
+      - backend
+      - test
+    restart: always
+    expose:
+      - "${API_PORT}"
+    depends_on:
+      - auth_service1
       - postgres
       - mongos1
     environment:
@@ -158,9 +219,10 @@ services:
     networks:
       - app_network
 
-  search_service:
+  # SEARCH SERVICE - INSTANCIA 1
+  search_service1:
     build: ./search_service
-    container_name: search_service_container
+    container_name: search_service1
     profiles:
       - backend
       - test
@@ -168,8 +230,36 @@ services:
     ports:
       - "${SEARCH_PORT}:${SEARCH_PORT}"
     depends_on:
-      - auth_service
-      - api
+      - auth_service1
+      - api1
+      - elasticsearch
+      - redis
+    environment:
+      - API_URL=${API_URL}
+      - AUTH_SERVICE_URL=${AUTH_SERVICE_URL}
+      - ELASTIC_NODE=${ELASTIC_NODE}
+      - ELASTIC_USER=${ELASTIC_USER}
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_HOST=${REDIS_HOST}
+      - SEARCH_PORT=${SEARCH_PORT}
+      - JWT_SECRET=${JWT_SECRET}
+    networks:
+      - app_network
+
+  # SEARCH SERVICE - INSTANCIA 2
+  search_service2:
+    build: ./search_service
+    container_name: search_service2
+    profiles:
+      - backend
+      - test
+    restart: always
+    expose:
+      - "${SEARCH_PORT}"
+    depends_on:
+      - auth_service1
+      - api1
       - elasticsearch
       - redis
     environment:
@@ -395,9 +485,12 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
-      - api
-      - search_service
-      - auth_service
+      - api1
+      - api2
+      - search_service1
+      - search_service2
+      - auth_service1
+      - auth_service2
     networks:
       - app_network
     profiles:

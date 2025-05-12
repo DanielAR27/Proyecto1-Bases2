@@ -41,7 +41,8 @@ C:\Users\colos\OneDrive\Documents\TEC\Bases 2\Proyecto #1\Proyecto #1 - BD2
 |   ├── package.json
 |   ├── server.js
 ├── pruebas
-|   ├── demoScript.js
+|   ├── generarDatos.js
+|   ├── menuPrueba.JS
 |   ├── package-lock.json
 |   ├── package.json
 ├── search_service
@@ -68,12 +69,8 @@ C:\Users\colos\OneDrive\Documents\TEC\Bases 2\Proyecto #1\Proyecto #1 - BD2
 ├── estructura.txt
 ├── init.sql
 ├── init_cluster.sh
-├── instrucciones.md
-├── life_easy.sh
+├── set_config.sh
 ├── nginx.conf
-├── pruebas
-├── pruebas.sh
 ├── README.md
-├── search_service
 └── template.env
 
