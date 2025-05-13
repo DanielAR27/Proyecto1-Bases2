@@ -12,36 +12,40 @@
 ## Índice
 
 1. [Enlace de GitHub](#enlace-de-github)
-2. [Descripción del Proyecto](#descripción-del-proyecto)
-3. [Arquitectura](#arquitectura)
+2. [Enlace sobre la Arquitectura del Proyecto](#enlace-sobre-la-arquitectura-del-proyecto)
+3. [Descripción del Proyecto](#descripción-del-proyecto)
+4. [Arquitectura](#arquitectura)
    - [Arquitectura Lógica](#arquitectura-lógica)
    - [Estructura del Proyecto](#estructura-del-proyecto)
-4. [Componentes Principales](#componentes-principales)
+5. [Componentes Principales](#componentes-principales)
    - [API Principal](#api-principal)
    - [Servicio de Autenticación](#servicio-de-autenticación)
    - [Servicio de Búsqueda](#servicio-de-búsqueda)
    - [Balanceador de Carga (Nginx)](#balanceador-de-carga-nginx)
    - [Sistema de Caché (Redis)](#sistema-de-caché-redis)
    - [Bases de Datos](#bases-de-datos)
-5. [Instalación](#instalación)
+6. [Instalación](#instalación)
    - [Requisitos Previos](#requisitos-previos)
    - [Instalación del Proyecto](#instalación-del-proyecto)
    - [Instalación de Módulos](#instalación-de-módulos)
-6. [Construcción y Levantamiento](#construcción-y-levantamiento-de-los-servicios)
-7. [Pruebas](#pruebas)
+7. [Construcción y Levantamiento](#construcción-y-levantamiento-de-los-servicios)
+8. [Pruebas](#pruebas)
    - [Pruebas Unitarias y de Integración](#pruebas-unitarias-y-de-integración)
    - [Cobertura de Pruebas](#cobertura-de-pruebas)
-8. [CI/CD Pipeline](#cicd-pipeline)
-9. [Acceso a Interfaces](#acceso-a-interfaces)
+9. [CI/CD Pipeline](#cicd-pipeline)
+10. [Acceso a Interfaces](#acceso-a-interfaces)
    - [Documentación API REST](#documentación-de-la-api-rest)
    - [Visualización de Postgres DB](#visualización-en-tiempo-real-de-postgres-db)
    - [Visualización de MongoDB](#visualización-en-tiempo-real-de-mongo-db)
    - [Elasticsearch y Kibana](#elasticsearch-y-kibana)
-10. [Reinicio de Entorno](#reinicio-completo-del-entorno)
+11. [Reinicio de Entorno](#reinicio-completo-del-entorno)
 
 ## Enlace de GitHub
 
 [Repositorio del Proyecto](https://github.com/DanielAR27/proyecto1-bases2)
+
+## Enlace sobre la Arquitectura del Proyecto
+[Arquitectura del Proyecto](./arquitectura_api.svg)
 
 ## Descripción del Proyecto
 
