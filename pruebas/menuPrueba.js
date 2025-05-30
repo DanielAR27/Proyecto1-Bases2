@@ -1044,7 +1044,7 @@ async function getCurrentUserInfo() {
     return;
   }
   
-  const response = await makeRequest('get', `${API}/users/me`, null, true);
+  const response = await makeRequest('get', `${AUTH_API}/users/me`, null, true);
   
   if (response) {
     console.log('Información del usuario:');
@@ -1064,7 +1064,7 @@ async function updateUser() {
   const email = await question('Email: ');
   
   const data = { nombre, email };
-  const response = await makeRequest('put', `${API}/users/${id}`, data, true);
+  const response = await makeRequest('put', `${AUTH_API}/users/${id}`, data, true);
   
   if (response) {
     console.log('Usuario actualizado con éxito.');
@@ -1085,7 +1085,7 @@ async function deleteUser() {
   console.log('=== ELIMINAR USUARIO ===');
   
   const id = await question('ID del usuario a eliminar: ');
-  const response = await makeRequest('delete', `${API}/users/${id}`, null, true);
+  const response = await makeRequest('delete', `${AUTH_API}/users/${id}`, null, true);
   
   if (response) {
     console.log('Usuario eliminado con éxito.');
